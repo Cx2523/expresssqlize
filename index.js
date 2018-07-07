@@ -10,7 +10,8 @@ app.listen(3333, () => console.log('listening on port 3333'));
 const dbOp = require('./sequelize');
 
 app.get('/', (req, res) => {
-    dbOp.getAllExercises().then(result => res.send(result));
+    res.send('Hello Heroku');
+    // dbOp.getAllExercises().then(result => res.send(result));
 });
 
 app.get('/:id', (req, res) => {
