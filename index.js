@@ -2,10 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
-
+const PORT = process.env.PORT || 3333;
 app.use(bodyParser.json());
 
-app.listen(3333, () => console.log('listening on port 3333'));
+app.listen(PORT, () => console.log(`listening on port ${PORT}`));
 
 const dbOp = require('./sequelize');
 
