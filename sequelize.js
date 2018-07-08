@@ -1,9 +1,13 @@
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('postgres://kgtfismiynzrxf:4f22dc87eb9927facb8549f117537c0b23372fa523efdd4221164f99fd193b19@ec2-54-83-12-150.compute-1.amazonaws.com:5432/d8lcap72j8drek', {
-    dialect: 'postgres'
-});
+// const db = new Sequelize('postgres://kgtfismiynzrxf:4f22dc87eb9927facb8549f117537c0b23372fa523efdd4221164f99fd193b19@ec2-54-83-12-150.compute-1.amazonaws.com:5432/d8lcap72j8drek', {
+//     dialect: 'postgres'
+// });
 
-const Exercise = sequelize.define('exercise', {
+const db = new Sequelize('Test2', 'postgres', 'password', {
+    dialect: 'postgres'
+})
+
+const Exercise = db.define('exercise', {
     Name: Sequelize.STRING,
     Description: Sequelize.TEXT, 
     Category: Sequelize.ENUM('Aerobic', 'Anaerobic', 'Flexibility', 'Stability'),
