@@ -15,7 +15,7 @@ const Exercise = db.define('exercise', {
     Metric2: Sequelize.ENUM('Weight', 'Reps', 'Time')
 });
 
-Exercise.sync();
+//Exercise.sync();
 
 function getAllExercises() {
     return Exercise.findAll().then(exercise => {
