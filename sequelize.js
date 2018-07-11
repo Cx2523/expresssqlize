@@ -15,8 +15,30 @@ const Exercise = db.define('exercise', {
     Metric2: Sequelize.ENUM('Weight', 'Reps', 'Time')
 });
 
-//Exercise.sync();
+const User = db.define('user', {
+    Username: Sequelize.STRING,
+    Password: Sequelize.STRING
+});
 
+// User.sync();
+
+//Exercise.sync();
+// User.create({
+//     Username: 'testname',
+//     Password: 'testpw'
+// });
+
+
+///////// USER methods ////////////////////////
+function findUserByUsername(username){
+    return User.findAll({
+        where: {
+            Username: username
+        }
+    });
+}
+
+////////// EXERCISE methods //////////////////////
 function getAllExercises() {
     return Exercise.findAll().then(exercise => {
         return exercise;
@@ -51,5 +73,6 @@ module.exports = {
     createNewExercise,
     deleteExerciseById,
     getExerciseById,
+    findUserByUsername
     // updateExerciseById
 }
