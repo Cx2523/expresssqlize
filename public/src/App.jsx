@@ -1,14 +1,30 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Data from './react-components/Data.jsx';
-import ExerciseForm from './react-components/NewExerciseForm.jsx'; 
+import {
+    BrowserRouter as Router,
+    Route,
+    Link
+} from 'react-router-dom';
+
+import Home from './react-pages/Home.jsx';
+import Signup from './react-pages/Signup.jsx';
 
 const App = () => {
     return (
-        <div>
-            <Data />
-            <ExerciseForm />
-        </div>
+        <Router>
+            <div>
+                <ul>
+                    <li><Link to="/">Home</Link></li>
+                    <li><Link to="/login">Login</Link></li>
+                    <li><Link to="/signup">Signup</Link></li>
+                </ul>
+
+                <hr />
+
+                <Route exact path="/" component={Home} />
+                {/* <Route path="/login" component={Login} /> */}
+                <Route path="/signup" component={Signup} />
+            </div>
+        </Router>
     )
 }
 

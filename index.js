@@ -37,6 +37,13 @@ passport.use(new LocalStrategy((username, password, done) => {
     });
 }));
 
+/////////// Register API ///////////////////
+app.post('/register', (req, res) => {
+    // bcrypt!
+    res.send('Nothing here yet');
+});
+
+
 /////////// Login API ///////////////////
 app.get('/login', (req, res) => {
     res.sendFile('login.html', {root: __dirname});
