@@ -3,7 +3,7 @@ import request from 'superagent';
 
 const Data = () => {
   const getData = (e) => {
-    request.get('/api', (result) => console.log(result));
+    request.get('/api').then((res) => console.log(res));
   }
   return (
     <div className="container">

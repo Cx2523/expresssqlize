@@ -25,11 +25,11 @@ function getAllExercises() {
 
 function createNewExercise(newExercise) {
     return Exercise.create({
-        Name: newExercise.Name,
-        Description: newExercise.Description,
-        Category: newExercise.Category,
-        Metric1: newExercise.Metric1,
-        Metric2: newExercise.Metric2
+        Name: newExercise.name,
+        Description: newExercise.description,
+        Category: newExercise.category,
+        Metric1: newExercise.metric1,
+        Metric2: newExercise.metric2
     });
 }
 
