@@ -4,6 +4,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const app = express();
 const dbOp = require('./sequelize');
+const bcrypt = require('bcrypt');
  
 const PORT = process.env.PORT || 3333;
 
@@ -28,19 +29,20 @@ passport.use(new LocalStrategy((username, password, done) => {
         if (!user[0]) {
             return done('User does not exist', null);
         } else {
-            if (user[0].dataValues.Password === password) {
-                return done(null, user[0].dataValues);
-            } else {
-                return done('Invalid Credentials', null);
-            }
+            bcrypt.compare(password, user[0].dataValues.Password, (err, res) => {
+                if (res) {
+                    return done(null, user[0].dataValues);
+                } else {
+                    return done('Invalid Credentials', null);
+                }
+            })
         }
     });
 }));
 
 /////////// Register API ///////////////////
 app.post('/register', (req, res) => {
-    // bcrypt!
-    res.send('Nothing here yet');
+    dbOp.createNewUser(req.body);
 });
 
 

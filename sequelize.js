@@ -2,6 +2,7 @@ const Sequelize = require('sequelize');
 // const db = new Sequelize('postgres://kgtfismiynzrxf:4f22dc87eb9927facb8549f117537c0b23372fa523efdd4221164f99fd193b19@ec2-54-83-12-150.compute-1.amazonaws.com:5432/d8lcap72j8drek', {
 //     dialect: 'postgres'
 // });
+const bcrypt = require('bcrypt');
 
 const db = new Sequelize('Test2', 'postgres', 'password', {
     dialect: 'postgres'
@@ -35,6 +36,17 @@ function findUserByUsername(username){
         where: {
             Username: username
         }
+    });
+}
+
+function createNewUser(newUser) {
+    bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(newUser.password, salt, (err, hash) => {
+            return User.create({
+                Username: newUser.username,
+                Password: hash
+            });
+        });
     });
 }
 
@@ -73,6 +85,7 @@ module.exports = {
     createNewExercise,
     deleteExerciseById,
     getExerciseById,
-    findUserByUsername
+    findUserByUsername,
+    createNewUser
     // updateExerciseById
 }
