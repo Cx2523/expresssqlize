@@ -47,9 +47,12 @@ passport.use(new LocalStrategy((username, password, done) => {
 
 /////////// Register API ///////////////////
 app.post('/register', (req, res) => {
-    dbOp.createNewUser(req.body);
+    dbOp.createNewUser(req.body)
+        .then(() => {
+            dbOp.findUserByUsername(req.body.username)
+                .then(result => res.send(result));
+    });
 });
-
 
 /////////// Login API ///////////////////
 app.get('/login', (req, res) => {
@@ -73,7 +76,6 @@ app.get('/api/:id', (req, res) => {
 });
 
 app.post('/api', (req, res) => {
-    console.log(req.body)
     dbOp.createNewExercise(req.body).then(() => res.send('Exercise inserted.'));
 });
 
