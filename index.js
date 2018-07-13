@@ -5,7 +5,8 @@ const LocalStrategy = require('passport-local').Strategy;
 const app = express();
 const dbOp = require('./sequelize');
 const bcrypt = require('bcrypt');
- 
+const sequelize = require('./models').sequelize;
+
 const PORT = process.env.PORT || 3333;
 
 app.use(passport.initialize());
@@ -14,7 +15,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static('./public/dist')); 
 
-app.listen(PORT, () => console.log(`listening on port ${PORT}`));
+sequelize.sync().then(() => {
+    app.listen(PORT, () => console.log(`listening on port ${PORT}`));
+});
+
+
 
 passport.serializeUser((user, done) => {
     done(null, user.Username);

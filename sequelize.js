@@ -1,41 +1,14 @@
-const Sequelize = require('sequelize');
-// const db = new Sequelize('postgres://kgtfismiynzrxf:4f22dc87eb9927facb8549f117537c0b23372fa523efdd4221164f99fd193b19@ec2-54-83-12-150.compute-1.amazonaws.com:5432/d8lcap72j8drek', {
-//     dialect: 'postgres'
-// });
 const bcrypt = require('bcrypt');
-
-const db = new Sequelize('Test2', 'postgres', 'password', {
-    dialect: 'postgres'
-})
-
-const Exercise = db.define('exercise', {
-    Name: Sequelize.STRING,
-    Description: Sequelize.TEXT, 
-    Category: Sequelize.ENUM('Aerobic', 'Anaerobic', 'Flexibility', 'Stability'),
-    Metric1: Sequelize.ENUM('Weight', 'Reps', 'Time'),
-    Metric2: Sequelize.ENUM('Weight', 'Reps', 'Time')
-});
-
-const User = db.define('user', {
-    Username: Sequelize.STRING,
-    Password: Sequelize.STRING
-});
-
-// User.sync();
-
-//Exercise.sync();
-// User.create({
-//     Username: 'testname',
-//     Password: 'testpw'
-// });
-
+const User = require('./models/index').User;
+const Exercise = require('./models/index').Exercise;
 
 ///////// USER methods ////////////////////////
 function findUserByUsername(username){
     return User.findAll({
         where: {
             Username: username
-        }
+        },
+        include: [ Exercise ]
     });
 }
 
@@ -63,7 +36,8 @@ function createNewExercise(newExercise) {
         Description: newExercise.description,
         Category: newExercise.category,
         Metric1: newExercise.metric1,
-        Metric2: newExercise.metric2
+        Metric2: newExercise.metric2,
+        UserId: newExercise.UserId
     });
 }
 
