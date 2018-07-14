@@ -2,11 +2,13 @@ import React from 'react';
 import {
     BrowserRouter as Router,
     Route,
-    Link
+    Link,
+    withRouter
 } from 'react-router-dom';
 
 import Home from './react-pages/Home.jsx';
 import Signup from './react-pages/Signup.jsx';
+import DashBoard from './react-pages/DashBoard.jsx';
 
 const App = () => {
     return (
@@ -23,6 +25,7 @@ const App = () => {
                 <Route exact path="/" component={Home} />
                 {/* <Route path="/login" component={Login} /> */}
                 <Route path="/signup" component={Signup} />
+                <Route path="/dashboard" component={DashBoard} />
             </div>
         </Router>
     )

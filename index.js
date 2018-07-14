@@ -50,7 +50,7 @@ app.post('/register', (req, res) => {
     dbOp.createNewUser(req.body)
         .then(() => {
             dbOp.findUserByUsername(req.body.username)
-                .then(result => res.send(result));
+                .then(result => res.json(result));
     });
 });
 

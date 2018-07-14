@@ -1,26 +1,67 @@
-import React from 'react';
+import * as React from 'react';
+import TextField from '@material-ui/core/TextField';
+import * as request from 'superagent';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import DashBoard from './DashBoard.jsx';
+import { Route } from 'react-router-dom';
 
-const Signup = () => {
-    return (
-        <div>
-            <h1>This is the Signup Page</h1>
-            <form action="/register" method="post">
-                <div>
-                    <label>Username:</label>
-                    <input type="text" name="username" />
-                    <br />
-                </div>
-                <div>
-                    <label>Password:</label>
-                    <input type="password" name="password" />
-                    <br />
-                </div>
-                <div>
-                    <input type="submit" value="Submit" />
-                </div>
+class Signup extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: '',
+            password: '',
+        };
+    }
+
+    handleChange = name => event => {
+        this.setState({
+            [name]: event.target.value,
+        });
+    };
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        request.post('/register')
+            .set('Content-Type', 'application/json')
+            .send(this.state)
+            .then(res => {
+                this.props.history.push({ 
+                    pathname: "/dashboard",
+                    state: { data: 'Your Data!' }
+                });
+            });
+    }
+
+    render() {
+        return (
+            <form onSubmit={this.handleSubmit}> 
+                <Grid>
+                    <Grid item>
+                        <TextField
+                            id="username"
+                            label="Username"
+                            value={this.state.username}
+                            onChange={this.handleChange('username')}
+                            margin="normal"
+                        />
+                    </Grid>
+                    <Grid item>
+                        <TextField
+                            id="password"
+                            label="Password"
+                            value={this.state.password}
+                            onChange={this.handleChange('password')}
+                            margin="normal"
+                        />
+                    </Grid>
+                </Grid>
+               
+                <Button variant='contained' color='primary' type='submit'>Submit</Button>
             </form>
-        </div>
-    );
+        );
+    }
 }
 
 export default Signup;

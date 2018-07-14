@@ -12,8 +12,8 @@ function findUserByUsername(username){
     });
 }
 
-function createNewUser(newUser) {
-    bcrypt.genSalt(10, (err, salt) => {
+async function createNewUser(newUser) {
+    await bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
             return User.create({
                 Username: newUser.username,

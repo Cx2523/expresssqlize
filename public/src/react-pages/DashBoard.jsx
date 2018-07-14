@@ -5,7 +5,7 @@ const DashBoard = (props) => {
         <div>
             <h1>This is the DashBoard Page</h1>
             <h3>All your stuff: </h3>
-            {props.data}
+            {props.location.state.data}
         </div>
     );
 }
