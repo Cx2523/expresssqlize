@@ -55,13 +55,13 @@ app.post('/register', (req, res) => {
 });
 
 /////////// Login API ///////////////////
-app.get('/login', (req, res) => {
-    res.sendFile('login.html', {root: __dirname});
-});
+// app.get('/login', (req, res) => {
+//     res.sendFile('login.html', {root: __dirname});
+// });
 
 app.post('/login',
     passport.authenticate('local', {failureRedirect: '/error'}),
-    (req, res) => res.redirect('/api')
+    (req, res) => res.json(res.req.user)
 );
 
 app.get('/error', (req, res) => res.send("error logging in"));

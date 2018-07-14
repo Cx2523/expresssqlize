@@ -3,10 +3,8 @@ import TextField from '@material-ui/core/TextField';
 import * as request from 'superagent';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import DashBoard from './DashBoard.jsx';
-import { Route } from 'react-router-dom';
 
-class Signup extends React.Component {
+class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -23,13 +21,13 @@ class Signup extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        request.post('/register')
+        request.post('/login')
             .set('Content-Type', 'application/json')
             .send(this.state)
             .then(res => {
                 this.props.history.push({ 
                     pathname: "/dashboard",
-                    state: { data: 'Your Data!' }
+                    state: { userdata: JSON.stringify(res.body) }
                 });
             });
     }
@@ -37,7 +35,7 @@ class Signup extends React.Component {
     render() {
         return (
             <form onSubmit={this.handleSubmit}> 
-                <h1>Signup</h1>
+                <h1>Login</h1>
                 <Grid>
                     <Grid item>
                         <TextField
@@ -65,4 +63,4 @@ class Signup extends React.Component {
     }
 }
 
-export default Signup;
+export default Login;

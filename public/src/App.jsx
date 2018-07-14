@@ -9,6 +9,7 @@ import {
 import Home from './react-pages/Home.jsx';
 import Signup from './react-pages/Signup.jsx';
 import DashBoard from './react-pages/DashBoard.jsx';
+import Login from './react-pages/Login.jsx';
 
 const App = () => {
     return (
@@ -23,7 +24,7 @@ const App = () => {
                 <hr />
 
                 <Route exact path="/" component={Home} />
-                {/* <Route path="/login" component={Login} /> */}
+                <Route path="/login" component={Login} />
                 <Route path="/signup" component={Signup} />
                 <Route path="/dashboard" component={DashBoard} />
             </div>
