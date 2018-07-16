@@ -13,10 +13,14 @@ var db        = {};
 // } else {
 //   var sequelize = new Sequelize(config.database, config.username, config.password, config);
 // }
-console.log('process.env.DATABASE_URL', process.env.DATABASE_URL);
-console.log('process.env', process.env);
 if (process.env.DATABASE_URL) {
-  var sequelize = new Sequelize(process.env.DATABASE_URL);
+  var sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialect:  'postgres',
+    protocol: 'postgres',
+    port:     match[4],
+    host:     match[3],
+    logging:  true
+  });
 } else {
   var sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
