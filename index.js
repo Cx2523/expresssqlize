@@ -67,18 +67,20 @@ app.post('/login',
 app.get('/error', (req, res) => res.send("error logging in"));
 
 //////////// Exercise Data API /////////////////////////
-app.get('/api', (req, res) => {
+app.get('/exercise', (req, res) => {
     dbOp.getAllExercises().then(result => res.send(result));
 });
 
-app.get('/api/:id', (req, res) => {
+app.get('/exercise/:id', (req, res) => {
     dbOp.getExerciseById(req.params.id).then(result => res.send(result));
 });
 
-app.post('/api', (req, res) => {
+app.post('/exercise', (req, res) => {
     dbOp.createNewExercise(req.body).then(() => res.send('Exercise inserted.'));
 });
 
-app.delete('/api/:id', (req, res) => {
+app.delete('/exercise/:id', (req, res) => {
     dbOp.deleteExerciseById(req.params.id).then(() => res.send('Exercise Deleted'));
 });
+
+///////// Workout Data API ////////////////////////////
