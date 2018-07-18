@@ -29,7 +29,7 @@ class Signup extends React.Component {
             .then(res => {
                 this.props.history.push({ 
                     pathname: "/dashboard",
-                    state: { data: 'Your Data!' }
+                    state: { userdata: JSON.stringify(res.body) }
                 });
             });
     }

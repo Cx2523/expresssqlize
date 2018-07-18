@@ -13,7 +13,7 @@ const DashBoard = (props) => {
                 <th>Category</th>
                 <th>Metric1</th>
                 <th>Metric2</th>
-                { userData.Exercises.map(exercise => 
+                { userData.Exercises ? userData.Exercises.map(exercise => 
                     <tr>
                         <td>{exercise.Name}</td>
                         <td>{exercise.Description}</td>
@@ -21,7 +21,7 @@ const DashBoard = (props) => {
                         <td>{exercise.Metric1}</td>
                         <td>{exercise.Metric2}</td>
                     </tr>
-                )}
+                ) : null }
             </table>
         </div>
     );
