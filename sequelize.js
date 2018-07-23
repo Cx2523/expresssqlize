@@ -35,8 +35,9 @@ function createNewExercise(newExercise) {
         Name: newExercise.name,
         Description: newExercise.description,
         Category: newExercise.category,
-        Metric1: newExercise.metric1,
-        Metric2: newExercise.metric2,
+        Weight: newExercise.weight,
+        Reps: newExercise.reps,
+        Time: newExercise.time,
         UserId: newExercise.UserId
     });
 }

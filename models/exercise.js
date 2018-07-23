@@ -4,8 +4,9 @@ module.exports = (sequelize, DataTypes) => {
     Name: DataTypes.STRING,
     Description: DataTypes.TEXT,
     Category: DataTypes.ENUM('Aerobic', 'Anaerobic', 'Flexibility', 'Stability'),
-    Metric1: DataTypes.ENUM('Weight', 'Reps', 'Time'),
-    Metric2: DataTypes.ENUM('Weight', 'Reps', 'Time')
+    Weight: DataTypes.BOOLEAN,
+    Reps: DataTypes.BOOLEAN,
+    Time: DataTypes.BOOLEAN
   }, {});
   Exercise.associate = function(models) {
     // associations can be defined here

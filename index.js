@@ -76,7 +76,7 @@ app.get('/exercise/:id', (req, res) => {
 });
 
 app.post('/exercise', (req, res) => {
-    dbOp.createNewExercise(req.body).then(() => res.send('Exercise inserted.'));
+    dbOp.createNewExercise(req.body).then((createdExercise) => res.send(createdExercise));
 });
 
 app.delete('/exercise/:id', (req, res) => {
