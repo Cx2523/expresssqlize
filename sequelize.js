@@ -54,6 +54,22 @@ function getExerciseById(id) {
     return Exercise.findById(id);
 }
 
+function updateExerciseById(id, updatedExercise) {
+    return Exercise.update({
+        Name: updatedExercise.name,
+        Description: updatedExercise.description,
+        Category: updatedExercise.category,
+        Weight: updatedExercise.weight,
+        Reps: updatedExercise.reps,
+        Time: updatedExercise.time
+      }, {
+        returning: true,
+        where: {
+          id: id
+        }
+      });
+}
+
 
 module.exports = {
     getAllExercises,
@@ -61,6 +77,6 @@ module.exports = {
     deleteExerciseById,
     getExerciseById,
     findUserByUsername,
-    createNewUser
-    // updateExerciseById
+    createNewUser,
+    updateExerciseById
 }

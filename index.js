@@ -79,6 +79,10 @@ app.post('/exercise', (req, res) => {
     dbOp.createNewExercise(req.body).then((createdExercise) => res.send(createdExercise));
 });
 
+app.put('/exercise/:id', (req, res) => {
+    dbOp.updateExerciseById(req.params.id, req.body).then((updatedExercise) => res.send(updatedExercise));
+});
+
 app.delete('/exercise/:id', (req, res) => {
     dbOp.deleteExerciseById(req.params.id).then(() => res.send('Exercise Deleted'));
 });
