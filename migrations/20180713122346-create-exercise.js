@@ -36,7 +36,7 @@ module.exports = {
       },
       UserId: {
         allowNull: false,
-        autoIncrement: true,
+        autoIncrement: false,
         type: Sequelize.INTEGER,
         references: {
           model: 'Users', // name of Target model

@@ -1,27 +1,4 @@
-const bcrypt = require('bcrypt');
-const User = require('./models/index').User;
-const Exercise = require('./models/index').Exercise;
-
-///////// USER methods ////////////////////////
-function findUserByUsername(username){
-    return User.findAll({
-        where: {
-            Username: username
-        },
-        include: [ Exercise ]
-    });
-}
-
-async function createNewUser(newUser) {
-    await bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newUser.password, salt, (err, hash) => {
-            return User.create({
-                Username: newUser.username,
-                Password: hash
-            });
-        });
-    });
-}
+const Exercise = require('../models/index').Exercise;
 
 ////////// EXERCISE methods //////////////////////
 function getAllExercises() {
@@ -70,13 +47,10 @@ function updateExerciseById(id, updatedExercise) {
       });
 }
 
-
 module.exports = {
     getAllExercises,
     createNewExercise,
     deleteExerciseById,
     getExerciseById,
-    findUserByUsername,
-    createNewUser,
     updateExerciseById
 }

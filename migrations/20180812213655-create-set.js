@@ -24,6 +24,28 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      WorkoutId: {
+        allowNull: false,
+        autoIncrement: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Workouts', // name of Target model
+          key: 'id', // key in Target model that we're referencing
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+      },
+      ExerciseId: {
+        allowNull: false,
+        autoIncrement: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Exercises', // name of Target model
+          key: 'id', // key in Target model that we're referencing
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
       }
     });
   },

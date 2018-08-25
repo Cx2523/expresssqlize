@@ -3,11 +3,16 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const app = express();
-const dbOp = require('./sequelize');
+
 const bcrypt = require('bcrypt');
 const sequelize = require('./models').sequelize;
 
 const PORT = process.env.PORT || 3333;
+
+const dbUserOps = require('./DB_Sequelize/Users');
+const dbExerciseOps = require('./DB_Sequelize/Exercises');
+const dbWorkoutOps = require('./DB_Sequelize/Workouts');
+const dbSetOps = require('./DB_Sequelize/Sets');
 
 app.use(passport.initialize());
 app.use(passport.session());  
@@ -25,12 +30,12 @@ passport.serializeUser((user, done) => {
     done(null, user.Username);
 });
 passport.deserializeUser((username, done) => {
-    dbOp.findUserByUsername(username);
+    dbUserOps.findUserByUsername(username);
 });
 
 
 passport.use(new LocalStrategy((username, password, done) => {
-    dbOp.findUserByUsername(username).then(user => {
+    dbUserOps.findUserByUsername(username).then(user => {
         if (!user[0]) {
             return done('User does not exist', null);
         } else {
@@ -47,44 +52,99 @@ passport.use(new LocalStrategy((username, password, done) => {
 
 /////////// Register API ///////////////////
 app.post('/register', (req, res) => {
-    dbOp.createNewUser(req.body)
+    dbUserOps.createNewUser(req.body)
         .then(() => {
-            dbOp.findUserByUsername(req.body.username)
-                .then(result => res.json(result));
+            console.log('TEST', req.body.username);
+            dbUserOps.findUserByUsername(req.body.username)
+                .then(result => {
+                    console.log('result of find', result);
+                    res.send(result)
+                });
     });
 });
 
 /////////// Login API ///////////////////
-// app.get('/login', (req, res) => {
-//     res.sendFile('login.html', {root: __dirname});
-// });
-
 app.post('/login',
     passport.authenticate('local', {failureRedirect: '/error'}),
-    (req, res) => res.json(res.req.user)
+    (req, res) => res.send(res.req.user)
 );
 
 app.get('/error', (req, res) => res.send("error logging in"));
 
 //////////// Exercise Data API /////////////////////////
 app.get('/exercise', (req, res) => {
-    dbOp.getAllExercises().then(result => res.send(result));
+    dbExerciseOps.getAllExercises()
+        .then(result => res.send(result));
 });
 
 app.get('/exercise/:id', (req, res) => {
-    dbOp.getExerciseById(req.params.id).then(result => res.send(result));
+    dbExerciseOps.getExerciseById(req.params.id)
+        .then(result => res.send(result));
 });
 
 app.post('/exercise', (req, res) => {
-    dbOp.createNewExercise(req.body).then((createdExercise) => res.send(createdExercise));
+    dbExerciseOps.createNewExercise(req.body)
+        .then((createdExercise) => res.send(createdExercise));
 });
 
 app.put('/exercise/:id', (req, res) => {
-    dbOp.updateExerciseById(req.params.id, req.body).then((updatedExercise) => res.send(updatedExercise));
+    dbExerciseOps.updateExerciseById(req.params.id, req.body)
+        .then((updatedExercise) => res.send(updatedExercise));
 });
 
 app.delete('/exercise/:id', (req, res) => {
-    dbOp.deleteExerciseById(req.params.id).then(() => res.send('Exercise Deleted'));
+    dbExerciseOps.deleteExerciseById(req.params.id)
+        .then(() => res.send('Exercise Deleted'));
 });
 
 ///////// Workout Data API ////////////////////////////
+app.get('/workout', (req, res) => {
+    dbWorkoutOps.getAllWorkouts()
+        .then(result => res.send(result));
+});
+
+app.get('/workout/:id', (req, res) => {
+    dbWorkoutOps.getWorkoutById(req.params.id)
+        .then(result => res.send(result));
+});
+
+app.post('/workout', (req, res) => {
+    dbWorkoutOps.createNewWorkout(req.body)
+        .then((createdWorkout) => res.send(createdWorkout));
+});
+
+app.put('/workout/:id', (req, res) => {
+    dbWorkoutOps.updateWorkoutById(req.params.id, req.body)
+        .then((updatedWorkout) => res.send(updatedWorkout));
+});
+
+app.delete('/workout/:id', (req, res) => {
+    dbWorkoutOps.deleteWorkoutById(req.params.id)
+        .then(() => res.send('Workout Deleted'));
+});
+
+///////// Set Data API ////////////////////////////
+app.get('/set', (req, res) => {
+    dbSetOps.getAllSets()
+        .then(result => res.send(result));
+});
+
+app.get('/set/:id', (req, res) => {
+    dbSetOps.getSetById(req.params.id)
+        .then(result => res.send(result));
+});
+
+app.post('/set', (req, res) => {
+    dbSetOps.createNewSet(req.body)
+        .then((createdSet) => res.send(createdSet));
+});
+
+app.put('/set/:id', (req, res) => {
+    dbSetOps.updateSetById(req.params.id, req.body)
+        .then((updatedSet) => res.send(updatedSet));
+});
+
+app.delete('/set/:id', (req, res) => {
+    dbSetOps.deleteSetById(req.params.id)
+        .then(() => res.send('Set Deleted'));
+});
