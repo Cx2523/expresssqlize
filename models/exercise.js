@@ -9,8 +9,6 @@ module.exports = (sequelize, DataTypes) => {
     Time: DataTypes.BOOLEAN
   }, {});
   Exercise.associate = function(models) {
-    // associations can be defined here
-    Exercise.belongsToMany(models.Workout, {through: 'WorkoutExercises'});
   };
   return Exercise;
 };

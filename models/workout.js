@@ -8,7 +8,6 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Workout.associate = function(models) {
     // associations can be defined here
-    Workout.hasMany(models.Exercise);
   };
   return Workout;
 };
