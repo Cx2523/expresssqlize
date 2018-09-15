@@ -9,6 +9,7 @@ var config    = require(__dirname + '/../config/config.json')[env];
 var db        = {};
  
 if (process.env.DATABASE_URL) {
+  console.log('database url', process.env.DATABASE_URL);
   var sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect:  'postgres',
     protocol: 'postgres',
@@ -17,7 +18,9 @@ if (process.env.DATABASE_URL) {
     logging:  true
   });
 } else {
+  console.log('');
   var config    = require(__dirname + '/../config/config.json')[env];
+  console.log('config', config);
   var sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
