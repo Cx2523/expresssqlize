@@ -17,12 +17,12 @@ if (process.env.DATABASE_URL) {
     // host:     match[3],
     logging:  true
   });
-} else {
-  console.log('');
-  var config    = require(__dirname + '/../config/config.json')[env];
-  console.log('config', config);
-  var sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
+// } else {
+//   var config    = require(__dirname + '/../config/config.json')[env];
+//   console.log('config', config);
+//   var sequelize = new Sequelize(config.database, config.username, config.password, config);
+// }
 
 fs
   .readdirSync(__dirname)
