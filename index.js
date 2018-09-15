@@ -52,16 +52,16 @@ passport.use(new LocalStrategy((username, password, done) => {
 
 /////////// Register API ///////////////////
 app.post('/register', (req, res) => {
-    res.send("TEST Register end point");
-    // dbUserOps.createNewUser(req.body)
-    //     .then(() => {
-    //         console.log('TEST', req.body.username);
-    //         dbUserOps.findUserByUsername(req.body.username)
-    //             .then(result => {
-    //                 console.log('result of find', result);
-    //                 res.send(result)
-    //             });
-    // });
+    // res.send("TEST Register end point");
+    dbUserOps.createNewUser(req.body)
+        .then(() => {
+            console.log('TEST', req.body.username);
+            dbUserOps.findUserByUsername(req.body.username)
+                .then(result => {
+                    console.log('result of find', result);
+                    res.send(result)
+                });
+    });
 });
 
 /////////// Login API ///////////////////
