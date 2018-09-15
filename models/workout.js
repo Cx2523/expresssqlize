@@ -11,4 +11,4 @@ module.exports = (sequelize, DataTypes) => {
     Workout.hasMany(models.Set);
   };
   return Workout;
-};
+}; 
