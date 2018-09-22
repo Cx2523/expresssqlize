@@ -37,13 +37,13 @@ passport.deserializeUser((username, done) => {
 passport.use(new LocalStrategy((username, password, done) => {
     dbUserOps.findUserByUsername(username).then(user => {
         if (!user[0]) {
-            return done('User does not exist', null);
+            return done('User does not exist', 'User does not exist');
         } else {
             bcrypt.compare(password, user[0].dataValues.Password, (err, res) => {
                 if (res) {
                     return done(null, user[0].dataValues);
                 } else {
-                    return done('Invalid Credentials', null);
+                    return done('Invalid Credentials', 'Invalid Credentials');
                 }
             })
         }
