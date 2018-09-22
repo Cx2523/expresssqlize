@@ -66,13 +66,11 @@ app.post('/register', (req, res) => {
 
 /////////// Login API ///////////////////
 app.post('/login',
-    // passport.authenticate('local', {failureRedirect: '/error'}),
-    // (req, res) => res.send(res.req.user)
-    passport.authenticate('local'),
+    passport.authenticate('local', {failureRedirect: '/error'}),
     (req, res) => res.send(res.req.user)
 );
 
-// app.get('/error', (req, res) => res.send("error logging in"));
+app.get('/error', (req, res) => res.send({req: req, res: res}));
 
 //////////// Exercise Data API /////////////////////////
 app.get('/exercise', (req, res) => {
