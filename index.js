@@ -43,7 +43,7 @@ passport.use(new LocalStrategy((username, password, done) => {
                 if (res) {
                     return done(null, user[0].dataValues);
                 } else {
-                    return done(null, false, 'Incorrect Password');
+                    return done(null, false, {message: 'Incorrect Password'});
                 }
             })
         }
@@ -67,12 +67,12 @@ app.post('/register', (req, res) => {
 /////////// Login API ///////////////////
 app.post('/login',
     passport.authenticate('local', {failureRedirect: '/error'}),
-    (req, res) => res.send(res)
+    (req, res) => res.send(res.req)
 );
 
 app.get('/error', (req, res) => {
     // res.set('Content-Type', 'application/json');
-    return res.send('error logging in');
+    return res.send("error logging in");
 });
 
 //////////// Exercise Data API /////////////////////////
