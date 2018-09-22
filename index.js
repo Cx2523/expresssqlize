@@ -72,7 +72,7 @@ app.post('/login',
 
 app.get('/error', (req, res) => {
     // res.set('Content-Type', 'application/json');
-    return res.send("error logging in");
+    return res.send(req.body);
 });
 
 //////////// Exercise Data API /////////////////////////
