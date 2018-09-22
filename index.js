@@ -70,7 +70,10 @@ app.post('/login',
     (req, res) => res.send(res.req.user)
 );
 
-app.get('/error', (req, res) => res.send({req: req, res: res}));
+app.get('/error', (req, res) => {
+    res.set('Content-Type', 'application/json');
+    return res.send({req: req, res: res})
+});
 
 //////////// Exercise Data API /////////////////////////
 app.get('/exercise', (req, res) => {
