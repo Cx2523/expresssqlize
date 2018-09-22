@@ -66,7 +66,7 @@ app.post('/register', (req, res) => {
 
 /////////// Login API ///////////////////
 app.post('/login',
-    passport.authenticate('local', {failureRedirect: '/error'}),
+    passport.authenticate('local'),
     (req, res) => res.send(res.req.user)
 );
 
