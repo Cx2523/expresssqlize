@@ -72,7 +72,7 @@ app.post('/login',
 
 app.get('/error', (req, res) => {
     // res.set('Content-Type', 'application/json');
-    return res.send([req, res]);
+    return res.send(req.authInfo.message);
 });
 
 //////////// Exercise Data API /////////////////////////
