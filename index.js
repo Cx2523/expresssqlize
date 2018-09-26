@@ -75,6 +75,11 @@ app.get('/error', (req, res) => {
     return res.send(req.authInfo);
 });
 
+app.get('/logout', function(req, res){
+    req.logout();
+    res.redirect('/');
+});
+
 //////////// Exercise Data API /////////////////////////
 app.get('/exercise', (req, res) => {
     dbExerciseOps.getAllExercises()
