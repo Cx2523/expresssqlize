@@ -1,5 +1,5 @@
 const Workout = require('../models/index').Workout;
-
+const Set = require('../models/index').Set;
 ////////// EXERCISE methods //////////////////////
 function getAllWorkouts() {
     return Workout.findAll().then(workout => {
@@ -37,6 +37,7 @@ function updateWorkoutById(id, updatedWorkout) {
         EndTime: updatedWorkout.endTime
     }, {
         returning: true,
+        include: [Set],
         where: {
           id: id
         }
