@@ -15,10 +15,10 @@ const dbWorkoutOps = require('./DB_Sequelize/Workouts');
 const dbSetOps = require('./DB_Sequelize/Sets');
 
 app.use(passport.initialize());
-app.use(passport.session());  
+app.use(passport.session());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(express.static('./public/dist')); 
+app.use(express.static('./public/dist'));
 
 sequelize.sync().then(() => {
     app.listen(PORT, () => console.log(`listening on port ${PORT}`));
@@ -37,13 +37,13 @@ passport.deserializeUser((username, done) => {
 passport.use(new LocalStrategy((username, password, done) => {
     dbUserOps.findUserByUsername(username).then(user => {
         if (!user[0]) {
-            return done(null, false, {message: 'Incorrect Username'} );
+            return done(null, false, { message: 'Incorrect Username' });
         } else {
             bcrypt.compare(password, user[0].dataValues.Password, (err, res) => {
                 if (res) {
                     return done(null, user[0].dataValues);
                 } else {
-                    return done(null, false, {message: 'Incorrect Password'});
+                    return done(null, false, { message: 'Incorrect Password' });
                 }
             })
         }
@@ -56,21 +56,24 @@ app.post('/register', (req, res) => {
     dbUserOps.createNewUser(req.body)
         .then(() => {
             console.log('TEST', req.body.username);
-            dbUserOps.findUserByUsername(req.body.username)
-                .then(user => {
-                    if (!user[0]) {
-                        return done(null, false, {message: 'Incorrect Username'} );
-                    } else {
-                        bcrypt.compare(password, user[0].dataValues.Password, (err, res) => {
-                            if (res) {
-                                return done(null, user[0].dataValues);
-                            } else {
-                                return done(null, false, {message: 'Incorrect Password'});
-                            }
-                        })
-                    }
-                });
-    });
+            passport.use(new LocalStrategy((username, password, done) => {
+                dbUserOps.findUserByUsername(req.body.username)
+                    .then(user => {
+                        if (!user[0]) {
+                            return done(null, false, { message: 'Incorrect Username' });
+                        } else {
+                            bcrypt.compare(password, user[0].dataValues.Password, (err, res) => {
+                                if (res) {
+                                    return done(null, user[0].dataValues);
+                                } else {
+                                    return done(null, false, { message: 'Incorrect Password' });
+                                }
+                            })
+                        }
+                    })
+
+            }))
+        })
 });
 
 /////////// Login API ///////////////////
@@ -84,7 +87,7 @@ app.get('/error', (req, res) => {
     return res.send(req.authInfo);
 });
 
-app.get('/logout', function(req, res){
+app.get('/logout', function (req, res) {
     req.logout();
     res.redirect('/');
 });
