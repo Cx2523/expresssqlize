@@ -57,9 +57,18 @@ app.post('/register', (req, res) => {
         .then(() => {
             console.log('TEST', req.body.username);
             dbUserOps.findUserByUsername(req.body.username)
-                .then(result => {
-                    console.log('result of find', result);
-                    res.send(result)
+                .then(user => {
+                    if (!user[0]) {
+                        return done(null, false, {message: 'Incorrect Username'} );
+                    } else {
+                        bcrypt.compare(password, user[0].dataValues.Password, (err, res) => {
+                            if (res) {
+                                return done(null, user[0].dataValues);
+                            } else {
+                                return done(null, false, {message: 'Incorrect Password'});
+                            }
+                        })
+                    }
                 });
     });
 });
